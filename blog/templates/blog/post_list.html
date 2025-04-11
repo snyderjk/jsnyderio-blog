@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>My Tech Blog</title>
+</head>
+
+<body>
+    <h1>Blog Posts</h1>
+    {% for post in posts %}
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content|linebreaks }}</p>
+    {% empty %}
+    <p>No posts yet.</p>
+    {% endfor %}
+</body>
+
+</html>
