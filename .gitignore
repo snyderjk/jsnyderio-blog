@@ -167,8 +167,23 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+# Node
+node_modules
+
 # Ruff stuff:
 .ruff_cache/
 
 # PyPI configuration file
 .pypirc
+
+# Django
+*.sqlite3
+db.sqlite3
+*.pyc
+media/
+staticfiles/
+static_root/
+*.log
+
+# AWS Config
+.aws/
