@@ -3,15 +3,47 @@
 
 <head>
   <meta charset="utf-8">
-  <title>MyBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title}} - {{ config.title }}{% else %}{{ config.title }}{% endif %}</title>
+  <meta name="description" content={% if page.description %}{{ page.description }}{% else %}{{ config.description }}{% endif %}>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ config.title }}{% endif %}">
+  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ config.description }}{% endif %}">
+  <meta property="og:type" content="{% if page %}article{% else %}website{% endif %}">
+
+  <link rel="stylesheet" href="{{ get_url(path='style.css') }}">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path='rss.xml') }}">
 </head>
 
 <body>
-  <section class="section">
-    <div class="container">
-      {% block content %} {% endblock content %}
+  <header>
+    <nav class="container">
+      <div class="nav-brand">
+        <a href="{{ get_url(path='@/_index.md') }}">{{ config.title }}</a>
+      </div>
+      <div class="nav-links">
+        <a href="{{ get_url(path='@/_index.md') }}">Home</a>
+        <a href="{{ get_url(path='@/posts/_index.md') }}">Posts</a>
+        <a href="{{ get_url(path='rss.xml') }}">RSS</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="section">
+    {% block content %} {% endblock content %}
+  </main>
+
+  <footer class="container">
+    <div class="footer-content">
+      <p>&copy; {{ now() | date(format="%Y") }} {{ config.author }}</p>
+      <div class="social-links">
+        {% if config.extra.github %}<a href="https://github.com/{{ config.extra.github }}">GitHub</a>{% endif %}
+        {% if config.extra.twitter %}<a href="https://twitter.com/{{ config.extra.twitter }}">Twitter</a>{% endif %}
+        {% if config.extra.linkedin %}<a href="https://linkedin.com/in/{{ config.extra.linkedin }}">LinkedIn</a>{% endif %}
+      </div>
     </div>
-  </section>
+  </footer>
 </body>
 
 </html>

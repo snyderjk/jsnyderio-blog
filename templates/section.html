@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section-header">
+  <h1>{{ section.title }}</h1>
+  {% if section.description %}
+  <p class="section-description">{{ section.description }}</p>
+  {% endif %}
+  <div class="section-meta">
+    <span class="post-count">{{ section.pages | length }} posts</span>
+    {% if section.pages %}
+    <span class="latest-post">Latest: {{ section.pages.0.date | date(format='%B %Y') }}</span>
+    {% endif %}
+  </div>
+</section>
+
+{% if section.pages %}
+<section class="posts-list">
+  {% for page in section.pages %}
+  <article class="post-preview">
+    <header class="post-preview-header">
+      <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
+      <div class="post-preview-meta">
+        <time datetime="{{ page.date }}">{{ page.date | date(format='%B %d, %Y') }}</time>
+        {% if page.reading_time %}
+        <span class="reading-time">{{ page.reading_time }} min read</span>
+        {% endif %}
+      </div>
+    </header>
+
+    {% if page.description %}
+    <p class="post-preview-description">{{ page.description }}</p>
+    {% elif page.summary %}
+    <p class="post-preview-description">{{ page.summary }}</p>
+    {% endif %}
+
+    {% if page.taxonomies.tags %}
+    <div class="post-preview-tags">
+      {% for tag in page.taxonomies.tags %}
+      <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <a href="{{ page.permalink }}" class="read-more">Read more →</a>
+  </article>
+  {% endfor %}
+</section>
+
+{% if paginator %}
+<nav class="pagination" aria-label="Posts pagination">
+  {% if paginator.previous %}
+  <a href="{{ paginator.previous }}" class="pagination-link pagination-previous">← Newer posts</a>
+  {% endif %}
+
+  <div class="pagination-info">
+    Page {{ paginator.current_index }} of {{ paginator.number_pagers }}
+  </div>
+
+  {% if paginator.next %}
+  <a href="{{ paginator.next }}" class="pagination-link pagination-next">Older posts →</a>
+  {% endif %}
+</nav>
+{% endif %}
+
+{% else %}
+<section class="empty-state">
+  <h2>No posts yet</h2>
+  <p>Check back soon for new content!</p>
+</section>
+{% endif %}
+{% endblock content %}

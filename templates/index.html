@@ -1,8 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  Jason Snyder Blog
-</h1>
-<p><a href="{{ get_url(path='@/blog/_index.md') }}">Posts</a>.</p>
+<section class="hero">
+    <h1>{{ section.title }}</h1>
+    <p class="lead">{{ section.description }}</p>
+</section>
+
+<section class="recent-posts">
+  <h2>Recent Posts</h2>
+  {% set posts_section = get_section(path="posts/_index.md") %}
+  {% if posts_section.pages %}
+  <div class="posts-grid">
+    {% for page in posts_section.pages | slice(end=6) %}
+    <article class="post-card">
+      <h3><a href="{{ page.permalink }}">{{ page.title }}</a></h3>
+      <time datetime="{{ page.date }}">{{ page.date | date(format='%B %d, %Y') }}</time>
+      {% if page.description %}
+      <p>{{ page.description }}</p>
+      {% endif %}
+      {% if page.taxonomies.tags %}
+      <div class="tags">
+        {% for tag in page.taxonomies.tags %}
+        <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </div>
+  <a href="{{ get_url(path='@/posts/_index.md') }}" class="view-all">View All Posts →</a>
+  {% else %}
+  <p class="no-posts">No posts yet. Create your first post in the <code>content/posts/</code> directory!</p>
+  {% endif %}
+</section>
 {% endblock content %}
