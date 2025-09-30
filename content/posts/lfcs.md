@@ -3,8 +3,8 @@ title = "LFCS Certification"
 date = 2025-07-10
 [taxonomies]
 tags = ["linux", "certifictaion"]
-
 +++
+
 # I Passed the LFCS
 
 I knew there was a lot about Linux that I wasn't very knowledgable in, but studying for the LFCS made me much more comfortable with the Linux environment
